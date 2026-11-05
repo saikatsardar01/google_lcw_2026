@@ -1,0 +1,2387 @@
+
+/* =====================================================
+   GOOGLE COMMUNITY CHALLENGE 2026
+   PREMIUM LEADERBOARD DESIGN
+   PART 1 OF 3
+
+   Foundation • Typography • Header • Hero • Statistics
+===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900;1000&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+/* =====================================================
+   01. DESIGN SYSTEM
+===================================================== */
+
+:root {
+  /* Google Colors */
+
+  --blue: #4285F4;
+  --blue-dark: #2869D8;
+  --blue-light: #EDF4FF;
+
+  --red: #EA4335;
+  --red-dark: #D73528;
+  --red-light: #FFF0EE;
+
+  --yellow: #FBBC05;
+  --yellow-dark: #B98400;
+  --yellow-light: #FFF8E5;
+
+  --green: #34A853;
+  --green-dark: #238642;
+  --green-light: #EAF7EE;
+
+  /* Typography */
+
+  --ink: #202633;
+  --ink-soft: #465164;
+  --muted: #778294;
+  --muted-light: #9AA5B4;
+
+  /* Backgrounds */
+
+  --background: #F5F7FC;
+  --surface: #FFFFFF;
+  --surface-soft: #F8FAFE;
+  --surface-blue: #F3F7FF;
+
+  /* Borders */
+
+  --border: #E8EDF5;
+  --border-dark: #DDE4EF;
+
+  /* Rounded corners */
+
+  --radius-sm: 12px;
+  --radius-md: 17px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-2xl: 34px;
+
+  /* Shadows */
+
+  --shadow-card:
+    0 2px 8px rgba(34, 54, 91, .025),
+    0 10px 30px rgba(34, 54, 91, .045);
+
+  --shadow-hover:
+    0 8px 20px rgba(34, 54, 91, .055),
+    0 20px 45px rgba(34, 54, 91, .085);
+
+  --shadow-blue:
+    0 8px 24px rgba(66, 133, 244, .15);
+}
+
+/* =====================================================
+   02. GLOBAL RESET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: var(--background);
+  color: var(--ink);
+
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--ink);
+}
+
+strong,
+b {
+  font-weight: 900;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.dashboard {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 6%;
+}
+
+/* =====================================================
+   03. HEADER
+===================================================== */
+
+.header {
+  min-height: 88px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+/* Actual logo image */
+
+.brand img {
+  display: block;
+  width: auto;
+  height: 40px;
+  object-fit: contain;
+}
+
+.brand h2 {
+  margin: 0;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+  line-height: 1.4;
+}
+
+.brand p {
+  margin: 4px 0 0;
+
+  color: var(--muted);
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.9px;
+}
+
+/* Header right side */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.live-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 10px 15px;
+
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+
+  color: var(--ink-soft);
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.live-dot {
+  width: 9px;
+  height: 9px;
+
+  display: inline-block;
+  flex-shrink: 0;
+
+  background: var(--green);
+  border-radius: 50%;
+
+  box-shadow: 0 0 0 4px var(--green-light);
+
+  animation: livePulse 2s infinite;
+}
+
+/* Refresh button */
+
+.refresh-button {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  background: white;
+  color: var(--ink-soft);
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  transition: all .2s ease;
+}
+
+.refresh-button:hover {
+  color: var(--blue);
+  background: var(--blue-light);
+  border-color: #C9DCFF;
+
+  transform: rotate(-12deg);
+}
+
+.refresh-button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+.spinning {
+  animation: spin .8s linear infinite;
+}
+
+/* =====================================================
+   04. HERO SECTION
+===================================================== */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  min-height: 390px;
+  margin-top: 30px;
+  padding: 66px 7%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+
+  background:
+    radial-gradient(
+      ellipse at 95% 10%,
+      #E7F0FF 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 75% 100%,
+      #E9F8ED 0%,
+      transparent 35%
+    ),
+    #FFFFFF;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+
+  box-shadow: var(--shadow-card);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 610px;
+}
+
+/* Eyebrow text */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--blue-dark);
+
+  font-size: 11px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Main heading */
+
+.hero h1 {
+  margin: 21px 0 18px;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  font-size: clamp(43px, 5.3vw, 69px);
+  font-weight: 800;
+
+  line-height: 1.12;
+  letter-spacing: -3.6px;
+
+  color: #202633;
+}
+
+.hero h1 span {
+  color: var(--blue);
+}
+
+/* Hero description */
+
+.hero-content > p {
+  max-width: 470px;
+  margin: 0;
+
+  color: #667184;
+
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.85;
+}
+
+/* Hero caption */
+
+.hero-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 27px;
+  padding: 12px 17px;
+
+  background: var(--blue-light);
+  border: 1px solid #DDEAFF;
+  border-radius: 40px;
+
+  color: var(--blue-dark);
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.hero-caption svg {
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   05. HERO DECORATION
+===================================================== */
+
+.hero-decoration {
+  position: relative;
+  flex-shrink: 0;
+
+  width: 275px;
+  height: 275px;
+
+  margin-right: 25px;
+}
+
+.hero-decoration::before {
+  content: "";
+
+  position: absolute;
+  inset: 15px;
+
+  border: 1px dashed #CFDAEA;
+  border-radius: 50%;
+}
+
+.hero-decoration::after {
+  content: "";
+
+  position: absolute;
+  inset: 43px;
+
+  border: 1px solid #E7ECF4;
+  border-radius: 50%;
+}
+
+.hero-center {
+  position: absolute;
+  top: 81px;
+  left: 81px;
+  z-index: 2;
+
+  width: 112px;
+  height: 112px;
+
+  display: grid;
+  place-items: center;
+
+  background: white;
+
+  border: 1px solid var(--border);
+  border-radius: 32px;
+
+  box-shadow: 0 15px 35px #263B6018;
+
+  color: var(--blue);
+}
+
+.hero-center svg {
+  width: 55px;
+  height: 55px;
+}
+
+/* Four floating color blocks */
+
+.color-orb {
+  position: absolute;
+  z-index: 3;
+
+  width: 54px;
+  height: 54px;
+
+  border-radius: 19px;
+
+  box-shadow: 0 8px 18px #00000012;
+}
+
+.orb-blue {
+  top: 0;
+  left: 110px;
+  background: var(--blue);
+}
+
+.orb-red {
+  top: 110px;
+  right: 0;
+  background: var(--red);
+}
+
+.orb-yellow {
+  bottom: 0;
+  left: 110px;
+  background: var(--yellow);
+}
+
+.orb-green {
+  top: 110px;
+  left: 0;
+  background: var(--green);
+}
+
+/* =====================================================
+   06. STATISTICS GRID
+===================================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 17px;
+  margin: 26px 0;
+}
+
+.stat-card {
+  min-width: 0;
+
+  padding: 23px;
+
+  background: white;
+
+  border: 1px solid var(--border);
+  border-radius: 21px;
+
+  box-shadow: var(--shadow-card);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-hover);
+  border-color: #DCE6F5;
+}
+
+/* Top row inside stats */
+
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 15px;
+}
+
+.stat-caption {
+  color: var(--muted-light);
+
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: 1.3px;
+}
+
+/* Stat icon backgrounds */
+
+.blue-bg {
+  color: var(--blue);
+  background: var(--blue-light);
+}
+
+.green-bg {
+  color: var(--green);
+  background: var(--green-light);
+}
+
+.yellow-bg {
+  color: var(--yellow-dark);
+  background: var(--yellow-light);
+}
+
+.red-bg {
+  color: var(--red);
+  background: var(--red-light);
+}
+
+/* Stat labels */
+
+.stat-card p {
+  margin: 17px 0 5px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Stat numbers */
+
+.stat-card h2 {
+  margin: 0;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  color: var(--ink);
+
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+/* =====================================================
+   END OF PART 1
+
+   NEXT:
+   PART 2 — Achievement legend, section headings,
+   podium, leaderboard table and participant styling.
+===================================================== */
+
+/* =====================================================
+   GOOGLE COMMUNITY CHALLENGE 2026
+   PREMIUM LEADERBOARD DESIGN
+   PART 2 OF 3
+
+   Achievement Legend • Podium • Leaderboard
+===================================================== */
+
+
+/* =====================================================
+   07. ACHIEVEMENT LEGEND
+===================================================== */
+
+
+/* ==========================================
+   ACHIEVEMENT LEVELS — PREMIUM FILTER DESIGN
+========================================== */
+
+.legend-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  padding: 29px 30px;
+
+  background: #FFFFFF;
+  border: 1px solid #E8EDF4;
+  border-radius: 23px;
+
+  box-shadow: 0 5px 22px rgba(31, 45, 70, 0.045);
+}
+
+/* Section title */
+
+.legend-section h3 {
+  margin: 0;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+
+  letter-spacing: -0.8px;
+  line-height: 1.4;
+
+  color: #202B3D;
+}
+
+/* Description */
+
+.legend-section p {
+  margin: 7px 0 0;
+
+  color: #758196;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.6;
+}
+
+/* Filter group */
+
+.legend-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 11px;
+}
+
+/* Individual filter */
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 47px;
+  min-width: 75px;
+
+  padding: 10px 17px;
+
+  background: #F8FAFD;
+
+  border: 1px solid #E7ECF3;
+  border-radius: 15px;
+
+  color: #536176;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+/* Hover */
+
+.legend-item:hover {
+  background: #FFFFFF;
+  border-color: #C7D8F4;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 13px rgba(40, 80, 140, .07);
+}
+
+/* Selected filter */
+
+.legend-item.selected {
+  background: #EDF4FF;
+  border-color: #BFD5FA;
+
+  color: #2467CE;
+
+  box-shadow: 0 3px 10px rgba(66, 133, 244, .09);
+}
+
+/* Colored indicator */
+
+.legend-dot {
+  width: 16px;
+  height: 16px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+/* Participant count */
+
+.legend-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 25px;
+  height: 25px;
+
+  /* padding: 0 6px; */
+  /* background: #EEF1F6; */
+  /* border-radius: 9px; */
+  /* color: #26344A; */
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.legend-item.selected .legend-count {
+  background: #D9E8FF;
+  color: #205DBD;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+  .legend-section {
+    padding: 22px 19px;
+    gap: 18px;
+    border-radius: 19px;
+  }
+
+  .legend-section h3 {
+    font-size: 19px;
+  }
+
+  .legend-section p {
+    font-size: 18px;
+  }
+
+  .legend-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 9px;
+  }
+
+  .legend-item {
+    min-width: 0;
+    min-height: 45px;
+    padding: 9px 11px;
+    gap: 8px;
+    font-size: 12px;
+    border-radius: 13px;
+  }
+
+  .legend-count {
+    min-width: 23px;
+    height: 23px;
+    font-size: 11px;
+  }
+}
+
+
+/* =====================================================
+   08. SECTION HEADINGS
+===================================================== */
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.section-heading h2 {
+  margin: 5px 0 0;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  font-size: clamp(23px, 3vw, 30px);
+  font-weight: 800;
+
+  line-height: 1.25;
+  letter-spacing: -1.1px;
+
+  color: #202633;
+}
+
+.section-heading p {
+  margin: 8px 0 0;
+
+  color: #778294;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+/* Section eyebrow */
+
+.top-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 14px;
+
+  color: var(--blue-dark);
+  background: var(--blue-light);
+
+  border: 1px solid #DCE9FF;
+  border-radius: 40px;
+
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+/* =====================================================
+   09. TOP PERFORMERS SECTION
+===================================================== */
+
+.top-section {
+  margin: 55px 0;
+}
+
+.top-section .section-heading {
+  margin-bottom: 28px;
+}
+
+/* =====================================================
+   10. WINNERS PODIUM
+===================================================== */
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  align-items: end;
+  gap: 19px;
+}
+
+/* Individual cards */
+
+.podium-card {
+  position: relative;
+  overflow: hidden;
+
+  padding: 29px 18px;
+
+  background: white;
+
+  border: 1px solid var(--border);
+  border-radius: 24px;
+
+  text-align: center;
+
+  box-shadow: var(--shadow-card);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+
+.podium-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* First place */
+
+.podium-1 {
+  border-top: 4px solid var(--yellow);
+  background:
+    linear-gradient(
+      180deg,
+      #FFFCF2 0%,
+      #FFFFFF 45%
+    );
+}
+
+/* Second place */
+
+.podium-2 {
+  border-top: 4px solid #AAB4C3;
+}
+
+/* Third place */
+
+.podium-3 {
+  border-top: 4px solid #CD8B54;
+}
+
+/* Rank / medal */
+
+.podium-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  margin-bottom: 17px;
+
+  background: #F4F6FA;
+  border-radius: 16px;
+
+  font-size: 23px;
+  font-weight: 900;
+}
+
+/* Avatar */
+
+.avatar {
+  width: 72px;
+  height: 72px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto;
+
+  color: white;
+
+  border: 4px solid white;
+  border-radius: 24px;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+
+  box-shadow: 0 5px 15px #00000012;
+}
+
+/* Winner names */
+
+.podium-card h3 {
+  margin: 17px 0 8px;
+
+  color: var(--ink);
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+
+  letter-spacing: -.4px;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+/* Achievement description */
+
+.achievement {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* Skill badge count */
+
+.podium-card h2 {
+  margin: 19px 0 4px;
+
+  color: var(--ink);
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+
+  letter-spacing: -1.8px;
+}
+
+.podium-card h2 small {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.podium-card > p {
+  margin: 7px 0 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Minimal colored level dot */
+
+.podium-level-dot {
+  width: 11px;
+  height: 11px;
+
+  margin: 15px auto 0;
+
+  border-radius: 50%;
+
+  box-shadow: 0 0 0 5px #00000008;
+}
+
+/* =====================================================
+   11. COMMUNITY RANKINGS
+===================================================== */
+
+.leaderboard-section {
+  margin: 58px 0;
+
+  padding: 32px;
+
+  background: white;
+
+  border: 1px solid var(--border);
+  border-radius: 27px;
+
+  box-shadow: var(--shadow-card);
+}
+
+/* Heading inside leaderboard */
+
+.leaderboard-section .section-heading {
+  margin-bottom: 27px;
+}
+
+.leaderboard-section .section-heading h2 {
+  margin-top: 6px;
+
+  color: #1C2638;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 29px;
+  font-weight: 800;
+
+  letter-spacing: -1.2px;
+  line-height: 1.3;
+}
+
+.leaderboard-section .section-heading p {
+  margin-top: 8px;
+
+  color: #778294;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* COMMUNITY RANKINGS eyebrow */
+
+.leaderboard-section .top-label {
+  color: #2869D8;
+  background: #EDF4FF;
+  border-color: #D8E7FF;
+
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: 1.5px;
+}
+
+/* =====================================================
+   12. TABLE CONTROLS
+===================================================== */
+
+.table-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+  margin-bottom: 23px;
+}
+
+/* Search */
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  width: 100%;
+  max-width: 390px;
+  min-height: 47px;
+
+  padding: 0 15px;
+
+  background: #F8FAFD;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+.search-box:focus-within {
+  background: white;
+
+  border-color: var(--blue);
+
+  box-shadow: 0 0 0 4px #4285F415;
+}
+
+.search-box span {
+  display: flex;
+  align-items: center;
+
+  color: #929DAE;
+  font-size: 20px;
+}
+
+.search-box svg {
+  flex-shrink: 0;
+  color: #929DAE;
+}
+
+.search-box input {
+  width: 100%;
+  min-width: 0;
+
+  padding: 12px 0;
+
+  background: transparent;
+  border: 0;
+  outline: none;
+
+  color: var(--ink);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.search-box input::placeholder {
+  color: #9AA5B4;
+  font-weight: 600;
+}
+
+/* Level selector */
+
+.table-controls select {
+  min-height: 47px;
+  min-width: 145px;
+
+  padding: 0 37px 0 15px;
+
+  background-color: #F8FAFD;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  color: var(--ink-soft);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  outline: none;
+  cursor: pointer;
+
+  transition: all .2s ease;
+}
+
+.table-controls select:hover,
+.table-controls select:focus {
+  border-color: #B8D0F7;
+  background-color: white;
+}
+
+/* =====================================================
+   13. LEADERBOARD TABLE
+===================================================== */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  border: 1px solid #EDF0F5;
+  border-radius: 19px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #D6DEEA transparent;
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 7px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #D6DEEA;
+  border-radius: 20px;
+}
+
+/* Table */
+
+table {
+  width: 100%;
+  min-width: 760px;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  text-align: left;
+}
+
+/* Table heading */
+
+thead {
+  background: #F6F8FC;
+}
+
+th {
+  padding: 17px 16px;
+
+  color: #737F91;
+
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 1000;
+
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid var(--border);
+}
+
+/* Table cells */
+
+td {
+  padding: 17px 16px;
+
+  color: var(--ink-soft);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  border-bottom: 1px solid #F0F2F6;
+
+  vertical-align: middle;
+}
+
+tbody tr {
+  background: white;
+
+  transition:
+    background .18s ease;
+}
+
+tbody tr:hover {
+  background: #F7FAFF;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =====================================================
+   14. RANK NUMBER
+===================================================== */
+
+.rank-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 35px;
+  height: 35px;
+
+  padding: 0 8px;
+
+  background: #F4F6FA;
+
+  border: 1px solid #EBEFF5;
+  border-radius: 11px;
+
+  color: #465164;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* =====================================================
+   15. PARTICIPANT IDENTITY
+===================================================== */
+
+.participant {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 180px;
+
+  white-space: nowrap;
+}
+
+/* Participant name */
+
+.participant strong {
+  display: block;
+
+  color: #202B3D;
+
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 1000;
+
+  letter-spacing: -.2px;
+  line-height: 1.4;
+}
+
+/* Initials avatar */
+
+.small-avatar {
+  width: 39px;
+  height: 39px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  color: white;
+
+  border: 2px solid #FFFFFF;
+  border-radius: 14px;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+
+  box-shadow: 0 2px 8px #00000012;
+}
+
+/* =====================================================
+   16. ACCESS CODE STATUS
+===================================================== */
+
+.status-yes,
+.status-no {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+.status-yes {
+  color: var(--green-dark);
+}
+
+.status-no {
+  color: var(--red-dark);
+}
+
+.status-yes svg,
+.status-no svg {
+  flex-shrink: 0;
+  stroke-width: 2.6;
+}
+
+/* Status dot */
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+
+  display: inline-block;
+  flex-shrink: 0;
+
+  background: currentColor;
+  border-radius: 50%;
+}
+
+/* =====================================================
+   17. SKILL BADGE COUNT
+===================================================== */
+
+.badge-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--yellow-dark);
+  white-space: nowrap;
+}
+
+.badge-count svg {
+  width: 17px;
+  height: 17px;
+
+  stroke-width: 2.4;
+}
+
+.badge-count strong {
+  color: #253047;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+
+  letter-spacing: -.3px;
+}
+
+/* Legacy points class:
+   Keep it neutral if any old JSX remains. */
+
+.points {
+  color: var(--ink);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   END OF PART 2
+
+   NEXT:
+   PART 3 — Level dots, last synced, footer,
+   responsive design, animations and final polish.
+===================================================== */
+
+/* =====================================================
+   GOOGLE COMMUNITY CHALLENGE 2026
+   PREMIUM LEADERBOARD DESIGN
+   PART 3 OF 3
+
+   Final Polish • Level Dots • Footer • Responsive
+   Animations • Accessibility
+===================================================== */
+
+
+/* =====================================================
+   18. LEVEL INDICATORS
+===================================================== */
+
+/* Minimal colored circle instead of text labels */
+
+.level-indicator {
+  display: inline-block;
+
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  vertical-align: middle;
+
+  box-shadow:
+    0 0 0 4px rgba(32, 41, 58, .045);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.level-indicator:hover {
+  transform: scale(1.25);
+
+  box-shadow:
+    0 0 0 6px rgba(32, 41, 58, .07);
+}
+
+/* Four Google-inspired levels */
+
+.green {
+  color: var(--green);
+  background-color: var(--green);
+}
+
+.blue {
+  color: var(--blue);
+  background-color: var(--blue);
+}
+
+.yellow {
+  color: var(--yellow);
+  background-color: var(--yellow);
+}
+
+.red {
+  color: var(--red);
+  background-color: var(--red);
+}
+
+/* Level pill compatibility */
+
+.level-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 7px 11px;
+
+  border-radius: 30px;
+
+  font-size: 10px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.level-pill > span {
+  width: 8px;
+  height: 8px;
+
+  display: inline-block;
+
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* =====================================================
+   19. LAST SYNCED INDICATOR
+===================================================== */
+
+/* Updated timestamp */
+
+.updated {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 10px 15px;
+
+  color: #657186;
+
+  background: #F6F8FC;
+
+  border: 1px solid var(--border);
+  border-radius: 40px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  line-height: 1.5;
+}
+
+.updated svg {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+
+  color: var(--blue);
+  stroke-width: 2.3;
+}
+
+/* =====================================================
+   20. FOOTER
+===================================================== */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+  flex-wrap: wrap;
+
+  margin-top: 65px;
+  padding: 27px 0;
+
+  border-top: 1px solid var(--border);
+
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.footer p {
+  margin: 0;
+
+  line-height: 1.7;
+}
+
+/* Google color decoration */
+
+.google-colors {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.google-colors span {
+  width: 19px;
+  height: 6px;
+
+  display: inline-block;
+
+  border-radius: 20px;
+}
+
+.google-colors .g-blue {
+  background: var(--blue);
+}
+
+.google-colors .g-red {
+  background: var(--red);
+}
+
+.google-colors .g-yellow {
+  background: var(--yellow);
+}
+
+.google-colors .g-green {
+  background: var(--green);
+}
+
+/* =====================================================
+   21. EMPTY STATE
+===================================================== */
+
+.empty-state {
+  min-height: 180px;
+
+  padding: 40px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--muted);
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.empty-state svg {
+  width: 34px;
+  height: 34px;
+
+  margin-bottom: 13px;
+
+  color: #A8B5C8;
+}
+
+.empty-state p {
+  margin: 0;
+
+  line-height: 1.7;
+}
+
+/* =====================================================
+   22. LOADING SCREEN
+===================================================== */
+
+.loading-screen {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 17px;
+
+  background: var(--background);
+
+  color: var(--muted);
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.loader {
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid #E6ECF5;
+  border-top-color: var(--blue);
+
+  border-radius: 50%;
+
+  animation: spin .8s linear infinite;
+}
+
+.loading-screen button {
+  padding: 11px 22px;
+
+  background: var(--blue);
+  color: white;
+
+  border: 0;
+  border-radius: 12px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  transition: background .2s ease;
+}
+
+.loading-screen button:hover {
+  background: var(--blue-dark);
+}
+
+/* =====================================================
+   23. GENERAL INTERACTIONS
+===================================================== */
+
+button {
+  transition:
+    background-color .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #4285F460;
+  outline-offset: 3px;
+}
+
+/* =====================================================
+   24. ANIMATIONS
+===================================================== */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 #34A85340;
+  }
+
+  70% {
+    box-shadow: 0 0 0 7px #34A85300;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 #34A85300;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero,
+.stats-grid,
+.legend-section,
+.top-section,
+.leaderboard-section {
+  animation: fadeUp .5s ease both;
+}
+
+.stats-grid {
+  animation-delay: .08s;
+}
+
+.legend-section {
+  animation-delay: .12s;
+}
+
+.top-section {
+  animation-delay: .16s;
+}
+
+.leaderboard-section {
+  animation-delay: .2s;
+}
+
+/* =====================================================
+   25. TABLET RESPONSIVENESS
+===================================================== */
+
+@media (max-width: 1050px) {
+
+  .dashboard {
+    padding: 0 4%;
+  }
+
+  .hero {
+    padding: 55px 6%;
+  }
+
+  .hero-decoration {
+    transform: scale(.85);
+    margin-right: 0;
+  }
+
+  .stats-grid {
+    gap: 13px;
+  }
+
+  .stat-card {
+    padding: 19px;
+  }
+
+  .leaderboard-section {
+    padding: 25px;
+  }
+
+}
+
+/* =====================================================
+   26. SMALL TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .header {
+    min-height: 76px;
+  }
+
+  .hero {
+    min-height: 340px;
+    padding: 45px 5%;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    letter-spacing: -2.5px;
+  }
+
+  .hero-decoration {
+    transform: scale(.72);
+    margin: -25px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .legend-section {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .legend-list {
+    width: 100%;
+  }
+
+  .podium {
+    gap: 12px;
+  }
+
+  .podium-card {
+    padding: 24px 12px;
+  }
+
+  .podium-card h3 {
+    font-size: 13px;
+  }
+
+  .podium-card h2 {
+    font-size: 33px;
+  }
+
+}
+
+/* =====================================================
+   27. MOBILE RESPONSIVENESS
+===================================================== */
+
+@media (max-width: 600px) {
+
+  /* Page */
+
+  .dashboard {
+    padding: 0 15px;
+  }
+
+  /* Header */
+
+  .header {
+    min-height: 70px;
+    gap: 8px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand img {
+    height: 32px;
+  }
+
+  .brand h2 {
+    font-size: 12px;
+    letter-spacing: -.3px;
+  }
+
+  .brand p {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  .header-right {
+    gap: 7px;
+  }
+
+  .live-status {
+    padding: 8px 10px;
+    gap: 7px;
+
+    font-size: 9px;
+  }
+
+  .live-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .refresh-button {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 11px;
+  }
+
+  /* Hero */
+
+  .hero {
+    min-height: auto;
+
+    margin-top: 19px;
+    padding: 34px 23px;
+
+    border-radius: 23px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .hero h1 {
+    margin: 17px 0 14px;
+
+    font-size: clamp(38px, 10vw, 49px);
+    line-height: 1.13;
+
+    letter-spacing: -2.5px;
+  }
+
+  .hero-content > p {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .hero-caption {
+    margin-top: 20px;
+    padding: 10px 13px;
+
+    font-size: 10px;
+  }
+
+  .hero-decoration {
+    display: none;
+  }
+
+  /* Statistics */
+
+  .stats-grid {
+    gap: 10px;
+    margin: 17px 0;
+  }
+
+  .stat-card {
+    padding: 15px;
+
+    border-radius: 17px;
+  }
+
+  .stat-icon {
+    width: 37px;
+    height: 37px;
+
+    border-radius: 12px;
+  }
+
+  .stat-caption {
+    font-size: 7px;
+    letter-spacing: .8px;
+  }
+
+  .stat-card p {
+    margin-top: 13px;
+
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .stat-card h2 {
+    font-size: 27px;
+    letter-spacing: -1px;
+  }
+
+  /* Legend */
+
+  .legend-section {
+    padding: 19px;
+
+    gap: 16px;
+
+    border-radius: 18px;
+  }
+
+  .legend-section h3 {
+    font-size: 14px;
+  }
+
+  .legend-section p {
+    font-size: 11px;
+  }
+
+  .legend-list {
+    gap: 7px;
+  }
+
+  .legend-item {
+    min-height: 36px;
+    padding: 8px 11px;
+
+    gap: 7px;
+
+    font-size: 10px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Section headings */
+
+  .section-heading {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .section-heading h2 {
+    font-size: 23px;
+    letter-spacing: -.8px;
+  }
+
+  .section-heading p {
+    font-size: 11px;
+  }
+
+  .top-label {
+    padding: 8px 11px;
+
+    font-size: 9px;
+    letter-spacing: .8px;
+  }
+
+  /* Podium */
+
+  .top-section {
+    margin: 38px 0;
+  }
+
+  .podium {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .podium-card {
+    padding: 20px;
+
+    border-radius: 19px;
+  }
+
+  .podium-rank {
+    width: 39px;
+    height: 39px;
+
+    margin-bottom: 12px;
+
+    font-size: 20px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+
+    border-radius: 20px;
+  }
+
+  .podium-card h3 {
+    font-size: 14px;
+  }
+
+  .podium-card h2 {
+    margin: 12px 0 4px;
+
+    font-size: 32px;
+  }
+
+  /* Leaderboard */
+
+  .leaderboard-section {
+    margin: 38px 0;
+    padding: 18px;
+
+    border-radius: 21px;
+  }
+
+  .leaderboard-section .section-heading {
+    margin-bottom: 19px;
+  }
+
+  .leaderboard-section .section-heading h2 {
+    font-size: 23px;
+    letter-spacing: -.8px;
+  }
+
+  .leaderboard-section .section-heading p {
+    font-size: 11px;
+  }
+
+  /* Controls */
+
+  .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 10px;
+    margin-bottom: 17px;
+  }
+
+  .search-box {
+    max-width: none;
+    min-height: 45px;
+
+    border-radius: 13px;
+  }
+
+  .search-box input {
+    font-size: 12px;
+  }
+
+  .table-controls select {
+    width: 100%;
+    min-height: 44px;
+
+    font-size: 11px;
+  }
+
+  /* Table */
+
+  .table-wrapper {
+    border-radius: 15px;
+  }
+
+  table {
+    min-width: 710px;
+  }
+
+  th {
+    padding: 14px 12px;
+    font-size: 9px;
+  }
+
+  td {
+    padding: 15px 12px;
+    font-size: 12px;
+  }
+
+  .participant {
+    gap: 9px;
+  }
+
+  .participant strong {
+    font-size: 12px;
+  }
+
+  .small-avatar {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 12px;
+  }
+
+  .rank-number {
+    min-width: 31px;
+    height: 31px;
+
+    font-size: 11px;
+  }
+
+  .badge-count strong {
+    font-size: 13px;
+  }
+
+  .level-indicator {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Last synced */
+
+  .updated {
+    padding: 8px 11px;
+
+    font-size: 9px;
+  }
+
+  /* Footer */
+
+  .footer {
+    justify-content: center;
+    text-align: center;
+
+    gap: 13px;
+
+    margin-top: 40px;
+    padding: 23px 0;
+
+    font-size: 10px;
+  }
+
+}
+
+/* =====================================================
+   28. EXTRA SMALL PHONES
+===================================================== */
+
+@media (max-width: 380px) {
+
+  .dashboard {
+    padding: 0 11px;
+  }
+
+  .brand h2 {
+    font-size: 10px;
+  }
+
+  .brand p {
+    font-size: 6px;
+  }
+
+  .live-status {
+    font-size: 8px;
+    padding: 7px 8px;
+  }
+
+  .hero {
+    padding: 28px 19px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .stat-card {
+    padding: 12px;
+  }
+
+  .stat-card h2 {
+    font-size: 24px;
+  }
+
+  .legend-item {
+    padding: 7px 9px;
+    font-size: 9px;
+  }
+
+  .leaderboard-section {
+    padding: 14px;
+  }
+
+}
+
+/* =====================================================
+   29. REDUCED MOTION ACCESSIBILITY
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+}
+
+/* =====================================================
+   END OF PART 3
+
+   COMPLETE CSS DESIGN SYSTEM FINISHED
+===================================================== */
+
+
+
+
+
+
+/* GOOGLE LOGO */
+
+.google-logo {
+  width: 43px;
+  height: 43px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Mobile logo */
+
+@media (max-width: 600px) {
+  .google-logo {
+    width: 34px;
+    height: 34px;
+  }
+}
