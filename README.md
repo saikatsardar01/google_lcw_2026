@@ -144,7 +144,7 @@ The frontend calculates the participant's achievement level and ranking using th
 
 ## 🚀 Project Vision
 
-**Google Learn with Communities — Community Challenge 2026**
+**Google Learn with Communities - Community Challenge 2026**
 
 *Learn more. Achieve more. Celebrate your learning journey.*
 
