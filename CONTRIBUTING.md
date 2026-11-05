@@ -1,7 +1,7 @@
 
 # Contributing Guidelines
 
-### Google Learn with Communities — Community Challenge 2026
+### Google Learn with Communities - Community Challenge 2026
 
 Thank you for your interest in contributing to this project! We appreciate every suggestion, improvement and contribution that helps make this community leaderboard better.
 
