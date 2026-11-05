@@ -82,4 +82,4 @@ Thank you for being part of the community! 🚀
 
 ---
 
-*Google Learn with Communities — Community Challenge 2026*
+*Google Learn with Communities - Community Challenge 2026*
