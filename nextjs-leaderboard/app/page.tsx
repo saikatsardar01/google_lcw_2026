@@ -1,6 +1,7 @@
 
 "use client";
 
+import DeadlineBar from "@/components/DeadlineBar";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -226,7 +227,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      {/* DeadlineBar */}
+      <DeadlineBar />
       {/* STATISTICS */}
 
       <section className="stats-grid">
