@@ -85,6 +85,43 @@ export default function Home() {
 
   const participants = data?.participants ?? [];
 
+  // Achievement priority: Green → Blue → Yellow → Red
+  const sortedParticipants = useMemo(() => {
+    const priority: Record<Color, number> = {
+      green: 1,
+      blue: 2,
+      yellow: 3,
+      red: 4,
+    };
+
+    return [...participants]
+      .sort((a, b) => {
+        // First: Sort by achievement colour
+        const colorDifference =
+          priority[a.color] - priority[b.color];
+
+        if (colorDifference !== 0) {
+          return colorDifference;
+        }
+
+        // Second: Highest skill badges first
+        const badgeDifference =
+          b.skillBadgesCompletedCount -
+          a.skillBadgesCompletedCount;
+
+        if (badgeDifference !== 0) {
+          return badgeDifference;
+        }
+
+        // Third: Alphabetical order
+        return a.userName.localeCompare(b.userName);
+      })
+      .map((person, index) => ({
+        ...person,
+        rank: index + 1,
+      }));
+  }, [participants]);
+
   const stats = useMemo(() => ({
     total: participants.length,
 
@@ -100,7 +137,7 @@ export default function Home() {
   }), [participants]);
 
   const filteredParticipants = useMemo(() => {
-    return participants.filter(person => {
+    return sortedParticipants.filter(person => {
       const matchesSearch = person.userName
         .toLowerCase()
         .includes(search.toLowerCase());
@@ -110,7 +147,7 @@ export default function Home() {
 
       return matchesSearch && matchesFilter;
     });
-  }, [participants, search, filter]);
+  }, [sortedParticipants, search, filter]);
 
   function initials(name: string) {
     return name
@@ -345,7 +382,7 @@ export default function Home() {
           <div className="podium">
 
             {[1, 0, 2].map(index => {
-              const person = participants[index];
+              const person = sortedParticipants[index];
 
               if (!person) return null;
 
