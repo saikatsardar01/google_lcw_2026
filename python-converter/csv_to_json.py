@@ -38,7 +38,7 @@ def calculate_color(access_status, badge_count):
     if status == "no":
         return "red"
 
-    if badge_count == 10:
+    if badge_count >= 10:
         return "green"
 
     if badge_count >= 5:
